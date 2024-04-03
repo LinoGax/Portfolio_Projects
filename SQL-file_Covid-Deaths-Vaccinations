@@ -101,4 +101,3 @@ SELECT *, (accumulative_new_vaccines/Population)*100 AS Percentage_Vaccinated
 FROM
   Percentage_Vaccinated
 
--- Creating a table from temporary table to use it for visualisation purposes
