@@ -1,0 +1,104 @@
+-- Using Covid_Deaths table
+-- Select columns to work with and organise them alphabetically and by date
+SELECT
+  location, date, total_cases, new_cases, total_deaths, population
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+ORDER BY
+  location, date
+
+-- Looking at Total Deaths vs Total Cases
+SELECT
+  location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 AS death_percentage
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+ORDER BY
+  location, date
+
+-- Looking at percentage population infected
+SELECT
+  location, population, total_cases, (total_cases/population)*100 AS percentage_population_infected
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+ORDER BY
+  location
+
+-- Countries with highest infection rate vs population
+SELECT
+  location, population, MAX(total_cases) AS highest_infection, MAX((total_cases/population)*100) AS percentage_population_infected
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+GROUP BY
+ location, population
+ORDER BY
+  percentage_population_infected DESC
+
+-- Continents with highest deaths count
+SELECT
+  continent, MAX(total_deaths) AS highest_deaths_continent, 
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+GROUP BY
+ continent
+ORDER BY
+  highest_deaths_continent DESC
+
+-- Global deaths count
+SELECT
+  SUM(new_cases) AS total_cases, SUM(new_deaths) AS total_deaths, (SUM(new_deaths)/SUM(new_cases))*100 AS death_percentage
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths
+WHERE
+  continent IS NOT NULL
+
+-- Using Covid_Vaccinations table
+-- Looking at Total Population vs Accumulative Vaccinations
+SELECT
+  Deaths.continent, Deaths.location, Deaths.date, Deaths.population, Vaccinations.new_vaccinations, 
+  SUM(Vaccinations.new_vaccinations) OVER (PARTITION BY Deaths.location ORDER BY Deaths.Location, Deaths.Date) AS 
+  accumulative_new_vaccines
+FROM
+  project-portfolio-418809.Covid19.Covid_Deaths AS Deaths
+JOIN
+  project-portfolio-418809.Covid19.Covid_Vaccinations AS Vaccinations
+ON
+  Deaths.location = Vaccinations.location
+  AND
+  Deaths.date = Vaccinations.date
+WHERE
+  Deaths.continent IS NOT NULL
+ORDER BY
+  Vaccinations.location ASC
+
+-- Creating a temporaty table to calculate percentage of people vaccinated and query multiple times
+WITH Percentage_Vaccinated AS (
+  SELECT
+    Deaths.continent, Deaths.location, Deaths.date, Deaths.population, Vaccinations.new_vaccinations, 
+    SUM(Vaccinations.new_vaccinations) OVER (PARTITION BY Deaths.location ORDER BY Deaths.Location, Deaths.Date) AS 
+    accumulative_new_vaccines
+  FROM
+    project-portfolio-418809.Covid19.Covid_Deaths AS Deaths
+  JOIN
+    project-portfolio-418809.Covid19.Covid_Vaccinations AS Vaccinations
+  ON
+    Deaths.location = Vaccinations.location
+  AND
+    Deaths.date = Vaccinations.date
+  WHERE
+    Deaths.continent IS NOT NULL
+)
+SELECT *, (accumulative_new_vaccines/Population)*100 AS Percentage_Vaccinated
+FROM
+  Percentage_Vaccinated
+
+-- Creating a table from temporary table to use it for visualisation purposes
