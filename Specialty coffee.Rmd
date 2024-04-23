@@ -1,0 +1,538 @@
+---
+title: "Specialty_Coffee"
+author: "Lino Gaxiola-Camacho"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: 
+    toc: yes
+    toc_depth: 2
+    latex_engine: xelatex
+    number_sections: yes
+  html_document: 
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    toc_float:
+      collapsed: no
+---
+# About the dataset
+
+## Coffee Quality Institute
+
+The Coffee Quality Institute (CQI) is a non-profit organization that works to improve the quality and value of coffee worldwide. It was founded in 1996 and has its headquarters in California, USA.
+
+CQI's mission is to promote coffee quality through a range of activities that include research, training, and certification programs. The organization works with coffee growers, processors, roasters, and other stakeholders to improve coffee quality standards, promote sustainability, and support the development of the specialty coffee industry.
+
+## Data
+
+CQI maintains a web database that serves as a resource for coffee professionals and enthusiasts who are interested in learning about coffee quality and sustainability. The database includes a range of information on coffee production, processing, and sensory evaluation. It also contains data on coffee genetics, soil types, and other factors that can affect coffee quality.
+
+## Sensory evaluations (coffee quality scores)
+
+* **Aroma**: Refers to the scent or fragrance of the coffee.
+
+* **Flavor**: The flavor of coffee is evaluated based on the taste, including any sweetness, bitterness, acidity, and other flavor notes.
+
+* **Aftertaste**: Refers to the lingering taste that remains in the mouth after swallowing the coffee.
+
+* **Acidity**: Acidity in coffee refers to the brightness or liveliness of the taste.
+
+* **Body**: The body of coffee refers to the thickness or viscosity of the coffee in the mouth.
+
+* **Balance**: Balance refers to how well the different flavor components of the coffee work together.
+
+* **Uniformity**: Uniformity refers to the consistency of the coffee from cup to cup.
+
+* **Clean Cup**: A clean cup refers to a coffee that is free of any off-flavors or defects, such as sourness, mustiness, or staleness.
+
+* **Sweetness**: It can be described as caramel-like, fruity, or floral, and is a desirable quality in coffee.
+
+**PLEASE NOTE: 'Total Cup Points' is literally the total of 10 features given above. There were some notebooks trying to predict the total cup points given these features. We know the exact function underlying the total cup points.**
+
+## Defects 
+
+Defects are undesirable qualities that can occur in coffee beans during processing or storage. Defects can be categorized into two categories: Category One and Category Two defects.
+
+Category One defects are primary defects that can be perceived through visual inspection of the coffee beans. These defects include Black beans, sour beans, insect-damaged beans, fungus-damaged beans, etc.
+
+Category Two defects are secondary defects that are more subtle and can only be detected through tasting. These defects include Over-fermentation, staleness, rancidness, chemical taste, etc.
+
+* **Quakers**: Quakers are beans of coffee that were picked and processed unripe. During the roasting process, they are easy to identify because they do not have a similar colour to its ripened counterparts. Quakers are lighter in colour and they tend to introduce undesired flavours to your final cup of coffee.
+
+* _Quakers analogy_: A quaker is like a banana, if the banana is green and unripened, it will be bitter. On the other hand, if it is yellow, it will develop sweet and desired flavours. A quaker behaves in the same way.
+
+## Data Scrapping
+
+[James LeDoux](https://github.com/jldbc) created in 2018 an original code in phyton to scrap the data from the [CQI website](https://database.coffeeinstitute.org/coffees). In may 2023, [Faith Boyar](https://github.com/fatih-boyar/coffee-quality-data-CQI/tree/main) updated the code to include most up to date information. Thus, the final version was obtained directly from [Kaggle](https://www.kaggle.com/datasets/fatihb/coffee-quality-data-cqi).
+
+# Questions to be answered
+
+1. Which countries have the highest and lowest average total cup points?
+
+2. Which country has the most graded beans?
+
+3. Which year has had the highest average total cup points?
+
+4. Which coffee variety has the highest and lowest average cup score?
+
+5. Which processing method has the highest and lowest average cup points?
+
+6. Is there a relationship between higher altitude and total cup points?
+
+7. Is there a relationship between processing method and aroma, flavour, aftertaste,acidity, body, balance, uniformity clean cup and sweetness?
+
+8. What coffee varieties have the most presence of quakers?
+
+## Pre-processing steps before data analysis 
+
+### Loading tidyverse package to analyse data
+
+```{r}
+# Installing and loading data package
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+### Loading data set
+
+```{r}
+#Reading Specialty Coffee Cup of Excellence data set (2021-2023) and storing in data frame
+arabica_coffee <- read_csv("df_arabica_clean.csv")
+#Changing format of all columns names with spaces
+colnames(arabica_coffee) = gsub(" ", "_", colnames(arabica_coffee))
+```
+
+### Exploring data set
+
+```{r}
+head(arabica_coffee)
+glimpse(arabica_coffee)
+```
+
+# Answering Question 1 - Top 5 Countries with highest average total cup points
+
+To answer question 1, the following steps are required:
+
+  1. Create a dataframe named _highest_points_.
+  2. Select the columns of interest _Country_of_Origin_ and _Total_Cup_Points_
+  3. Grouping by country of origin and summarising information by mean total cup points.
+  4. Obtaining top 5 countries with highest score.
+  5. Printing information.
+  
+```{r}
+highest_points <- arabica_coffee %>%
+  select(Country_of_Origin, Total_Cup_Points) %>%
+  group_by(Country_of_Origin) %>% 
+  summarise(Avg_high = mean(Total_Cup_Points)) %>% 
+  arrange(-Avg_high) %>% 
+  top_n(5, Avg_high)%>% 
+  print()
+```
+
+## Countries with lowest average total cup points
+
+```{r}
+lowest_points <- arabica_coffee %>%
+  select(Country_of_Origin, Total_Cup_Points) %>%
+  group_by(Country_of_Origin) %>% 
+  summarise(Avg_low = mean(Total_Cup_Points)) %>% 
+  arrange(Avg_low) %>%
+  top_n(-5, Avg_low) %>% 
+  print()
+```
+
+# Answering Question 2 - Top country with most graded beans and average cup points
+
+To answer question 2, the following steps are required:
+
+  1. Create a data frame named _most_beans_by_country_ to obtain countries with most graded      beans.
+  2. Create a data frame named _most_beans_by_points_ with all countries and their mean total cup points.
+  3. Joining data frames generated into a new data frame named _country_most_graded_beans_.
+  4. Printing information.
+  
+```{r}
+# Generating table 1 with countries with most graded beans in descending order
+most_beans_by_country <- arabica_coffee %>% 
+  select(Country_of_Origin, Total_Cup_Points) %>%
+  group_by(Country_of_Origin) %>% 
+  count(Country_of_Origin, sort = TRUE)
+
+# Generating table 2 with countries with average total cup points
+most_beans_by_points <- arabica_coffee %>%
+  select(Country_of_Origin, Total_Cup_Points) %>%
+  group_by(Country_of_Origin) %>% 
+  summarise(Avg_High = mean(Total_Cup_Points)) %>% 
+  arrange(-Avg_High) 
+
+# Joining table 1 and table 2 and selecting the top country
+country_most_graded_beans <- inner_join(most_beans_by_country,most_beans_by_points) %>% 
+  # Renaming column
+  rename(Number_Graded_Beans = n) %>% 
+  # Since Slice head function did not work on the data frame, filtering the top row after being visualised with filter command was the best alternative. 
+  filter(`Number_Graded_Beans` == "61")
+print(country_most_graded_beans)
+```
+
+# Answering Question 3 - Year with highest average total cup points.
+
+**NOTE**: No statistical test was done to compare differences in sample means from population.
+
+To answer question 3, the following steps are required:
+
+  1. Create a data frame named _year_points_ to obtain year with highest points.
+  2. Selecting the columns of interest of _Country_of_Origin_, _Harvest_Year_ and _Total_Cup_Points_.
+  3. Grouping information by harvest year.
+  4. Summarising information by mean total cup points and storing it in variable _Year_High_.
+  5. Ordering information in descending order and printing the result. 
+
+```{r}
+# Creating data frame
+year_points <- arabica_coffee %>%
+  select(Country_of_Origin, Harvest_Year, Total_Cup_Points) %>%
+  group_by(Harvest_Year) %>% 
+  summarise(Year_High = mean(Total_Cup_Points)) %>% 
+  arrange(-Year_High) %>% 
+  top_n(1, Year_High) %>% 
+  print()
+
+```
+
+# Answering Question 4 - Coffee variety with highest average cup score
+
+To answer question 4, the following steps are required:
+
+  1. Create a data frame named _variety_counts_ to explore number of coffee beans graded per variety.
+  - Selecting the columns of interest of _Country_of_Origin_, _Variety_, _Total_Cup_Points_.
+  - Counting the number of repetitions of each variety.
+  - Filtering out "N/A" values.
+  2. Create a data frame named _variety_points_ to explore number of coffee beans graded per variety.
+    - Selecting the columns of interest of _Country_of_Origin_, _Variety_, _Total_Cup_Points_.
+  - Group information by variety.
+  - Summarising information in a new variable named _Variety_Average_.
+  - Arranging in descending order the information.
+  2. Selecting the columns of interest of _Country_of_Origin_, _Harvest_Year_ and _Total_Cup_Points_.
+  3. Joining data frames into a new one named _varieties_top_points_.
+  - Since sample sizes varied widely across varieties, only elements with close sample sizes were selected for further analysis.
+  4. Printing results.
+  
+```{r}
+#Exploring number of entries per coffee variety to compare similar sized samples and generating table
+variety_counts <- arabica_coffee %>%  
+  select(Country_of_Origin, Variety, Total_Cup_Points) %>%
+  count(Variety, sort = TRUE) %>% 
+  drop_na()
+
+#Exploring total cup points by variety and generating table
+variety_points <- arabica_coffee %>%
+  select(Country_of_Origin, Variety, Total_Cup_Points) %>%
+  group_by(Variety) %>% 
+  summarise(Variety_Average = mean(Total_Cup_Points)) %>% 
+  arrange(-Variety_Average) 
+
+# Joining tables and selecting the top 3 varieties with comparable sample size
+varieties_top_points <- inner_join(variety_counts, variety_points) %>% 
+  rename(Total_Count = n) %>% 
+  filter(Total_Count >= 20) %>% 
+  arrange(-Variety_Average) %>% 
+  print()
+```
+
+## Countries with lowest average total cup points
+
+Similar to the varieties with top scores, I was curious to know about the varieties with lowest scores. Thus, the same process was repeated but for lowest scores.
+
+```{r}
+# Selecting the lowest 3 varieties with comparable sample size
+varieties_low_points <- inner_join(variety_counts, variety_points) %>% 
+  rename(Total_Count = n) %>% 
+  filter(Total_Count >1 & Total_Count <= 20) %>% 
+  arrange(Variety_Average)
+
+varieties_low_points <- slice_head(varieties_low_points,n = 3)
+print(varieties_low_points)
+```
+
+# Answering Question 5 - Processing method with highest and lowest average cup points
+
+**Pre-processing of data to ensure data consistency**
+
+Names of the processing methods were not consistent. Thus, a pre-processing step was carried out to have a similar data format.
+
+```{r}
+# Modifying processing methods names to have data consistency
+arabica_coffee <- arabica_coffee %>% 
+  mutate(`Processing_Method` = replace(`Processing_Method`,`Processing_Method` == "Washed / Wet", "Washed")) %>% 
+  mutate(`Processing_Method` = replace(`Processing_Method`,`Processing_Method` == "Natural / Dry", "Natural")) %>% 
+  mutate(`Processing_Method` = replace(`Processing_Method`,`Processing_Method` == "Pulped natural / honey", "Honey")) %>% 
+  mutate(`Processing_Method` = replace(`Processing_Method`,`Processing_Method` == "SEMI-LAVADO", "Semi Washed"))
+```
+
+To answer question 5, the following steps are required:
+
+  1. Create a data frame named _most_method_ to count the appearance of processing methods in descending order.
+  - Selecting the columns of interest of _Processing_Method_ and _Total_Cup_Points_.
+  - Grouping information by _Processing_Method_.
+  - Filtering out "N/A" values.
+  - Counting values.
+  2. Create a data frame named _method_high_points_ to obtain the mean total cup points by processing method.
+  - Selecting the columns of interest of _Processing_Method_ and _Total_Cup_Points_.
+  - Grouping information by _Processing_Method_.
+  - Summarising the highest mean total cup point values in a variable named _Avg_High_.
+  - Filtering out "N/A" values.
+  - Sorting values in descending order.
+  3. Joining data frames into a new one named _top3_methods_.
+  - Since sample sizes varied widely across methods, only elements with close sample sizes were selected for further analysis.
+  4. Printing results.
+  
+```{r}
+# Generating table 1 with a count of appearance of processing methods in descending order
+most_method <- arabica_coffee %>% 
+  select(Processing_Method, Total_Cup_Points) %>%
+  group_by(Processing_Method) %>%
+  drop_na() %>% 
+  count(Processing_Method, sort = TRUE)
+
+# Generating table 2 to obtain average total cup points by processing method
+method_high_points <- arabica_coffee %>%
+  select(Processing_Method, Total_Cup_Points) %>%
+  group_by(Processing_Method) %>% 
+  summarise(Avg_High = mean(Total_Cup_Points)) %>%
+  drop_na() %>% 
+  arrange(-Avg_High)
+
+# Joining table 1 and table 2, comparing the 3 most common processes and rank them by total cup points
+top3_methods <- inner_join(most_method,method_high_points) %>% 
+  rename(Method_Count = n) %>% 
+  filter(`Method_Count` > 10) %>% 
+  arrange(-`Avg_High`) %>% 
+  print()
+```
+**Interestingly, despite differences in counts for the three most common processes, the result of mean total cup points is very similar.**
+
+# Answering Question 6 - Relationship between altitude and total cup points
+
+**Pre-processing of data to ensure data consistency**
+
+The altitude column has a range of lowest to peakest altitude for the coffee production. To make an easier quantitative comparison, an average altitude was  calculated based on highest and lowest altitude.
+
+The task consisted in breaking the _Altitude_ column with the format "AAAA-BBBB" to two columns with the format "AAAA" "-" "BBBB". From there, an average of "AAAA" & "BBBB" was obtained to get the final altitude value.
+
+```{r}
+#Breaking one column into two different columns with lowest and highest value
+Altitude <- arabica_coffee %>% 
+  separate(Altitude, c("Lowest", "Highest")) 
+  
+sapply(Altitude, class)
+
+#Changing character type of vector to numeric
+Altitude2 <- Altitude 
+Altitude2$Lowest <- as.numeric(Altitude2$Lowest)
+Altitude2$Highest <- as.numeric(Altitude2$Highest)
+
+sapply(Altitude2, class)
+
+#Joining two columns into a new one with final altitude values
+Altitude_Fixed <- Altitude2 %>% 
+  mutate(New_Altitude = if_else(is.na(Highest), Lowest, (Lowest + Highest) / 2))
+```
+
+To answer question 6, the following steps are required:
+
+  1. Create a data frame named _Altitude_points_ with all the total score points from the different countries.
+  - Selecting the columns of interest of _Conutry_of_Origin_ _and _Total_Cup_Points__New_Altitude_ and _Total_Cup_Points_.
+  - Filter out all "N/A" values.
+  2. Plot _Total cup points_ values versus _Altitude_ using a scatterplot.
+  - A trend line was generated to facilitate the visualisation of the information.
+  - A correlation between altitude and total cup points was calculated to check relationship.
+    
+```{r warning=FALSE}
+#Working with columns required from Altitude_Fixed data frame to find relationship with cup points
+Altitude_Points <- Altitude_Fixed %>% 
+  select(Country_of_Origin, New_Altitude, Total_Cup_Points) %>% 
+  filter(!is.na(New_Altitude) & !is.na(Total_Cup_Points))
+
+#Plotting New_Altitude vs Total_Cup_Points and finding a relationship
+ggplot(data = Altitude_Points) +
+  geom_point(mapping = aes(x = New_Altitude, y=  Total_Cup_Points)) + 
+  geom_smooth(mapping = aes(x = New_Altitude, y = Total_Cup_Points), method = "lm", se = FALSE) +
+  labs(title = "Relationship of Altitude vs Total Cup Points", x = "Altitude (m)", y= "Total Cup Points (0-100)",) +
+  theme(plot.title = element_text(hjust = 0.5), axis.title = element_text(face = "bold")) +
+  xlim(0,5000) + ylim(75,90) +
+  geom_text(data = . %>% 
+            summarise(correlation = cor(New_Altitude, Total_Cup_Points, use = "complete.obs")),
+            aes(label = paste("Correlation:", round(correlation, 2)), x = Inf, y = -Inf), 
+            hjust = 1, vjust = 0, size = 4, colour = "red")
+```
+
+Although there is a **positive** correlation between **altitude** and **total cup points**, the correlation is only **0.12**.
+
+# Answering Question 7 - Relationship between processing method and coffe quality scores
+
+To answer question 7, the following steps are required:
+
+  1. Create a data frame named _Method_scores_ with information about 3 main processing methods and coffee quality scores.
+  - Selecting the columns of _Processing_Method_ and the 9 columns of coffee quality scores.
+  - Grouping information by processing method.
+  - Summarising information by mean for each 9 quality score points.
+  - Filtering just the 3 main processing methods of interest.
+  2. Obtaining the processing method with highest score for each of the 9 coffee quality scores and storing it into different variables.
+  - Printing all the variables with information.
+  3. Generating boxplots for all 9 coffee quality scores separated by processing method.
+  
+```{r}
+#Creating a data frame with the information of main 3 methods and score
+Method_scores <- arabica_coffee %>% 
+  select(Processing_Method, Aroma, Flavor, Aftertaste, Acidity, Body, Balance, Uniformity, Clean_Cup, Sweetness) %>%
+  group_by(Processing_Method) %>% 
+  summarise(Mean_Aroma = mean(Aroma),
+            Mean_Flavor = mean(Flavor),
+            Mean_Aftertaste = mean(Aftertaste),
+            Mean_Acidity = mean(Acidity),
+            Mean_Body = mean(Body),
+            Mean_Balance = mean(Balance),
+            Mean_Uniformity = mean(Uniformity),
+            Mean_Clean_Cup = mean(Clean_Cup),
+            Mean_Sweetness = mean(Sweetness),
+            ) %>% 
+  filter(Processing_Method == "Natural" | Processing_Method == "Washed" | Processing_Method == "Honey")
+
+# Obtaining processing method with highest average score
+
+method_most_aroma <- Method_scores %>% 
+  select(Processing_Method, Mean_Aroma) %>%
+  arrange(-Mean_Aroma) %>% 
+  slice_head() %>% 
+  print()
+
+
+method_most_flavor <- Method_scores %>% 
+  select(Processing_Method, Mean_Flavor) %>%
+  arrange(-Mean_Flavor) %>% 
+  slice_head() %>% 
+  print()
+
+method_most_aftertaste <-Method_scores %>% 
+  select(Processing_Method, Mean_Aftertaste) %>%
+  arrange(-Mean_Aftertaste) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_acidity <- Method_scores %>% 
+  select(Processing_Method, Mean_Acidity) %>%
+  arrange(-Mean_Acidity) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_body <-Method_scores %>% 
+  select(Processing_Method, Mean_Body) %>%
+  arrange(-Mean_Body) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_balance <-Method_scores %>% 
+  select(Processing_Method, Mean_Balance) %>%
+  arrange(-Mean_Balance) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_uniformity <- Method_scores %>% 
+  select(Processing_Method, Mean_Uniformity) %>%
+  arrange(-Mean_Uniformity) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_clean <- Method_scores %>% 
+  select(Processing_Method, Mean_Clean_Cup) %>%
+  arrange(-Mean_Clean_Cup) %>% 
+  slice_head()%>% 
+  print()
+
+method_most_sweetness <- Method_scores %>% 
+  select(Processing_Method, Mean_Sweetness) %>%
+  arrange(-Mean_Sweetness) %>% 
+  slice_head() %>% 
+  print()
+
+#Plotting Processing_methods vs Scores and finding a relationship
+main_methods <- arabica_coffee %>% 
+  filter(Processing_Method == "Natural" | Processing_Method == "Washed" | Processing_Method == "Honey")
+
+ggplot(data = main_methods) +
+  geom_boxplot(mapping = aes(x = "Aroma", y = Aroma)) +
+  geom_boxplot(mapping = aes(x = "Flavor", y = Flavor)) +
+  geom_boxplot(mapping = aes(x = "Aftertaste", y = Aftertaste)) +
+  geom_boxplot(mapping = aes(x = "Acidity", y = Acidity)) +
+  geom_boxplot(mapping = aes(x = "Body", y = Body)) +
+  geom_boxplot(mapping = aes(x = "Balance", y = Balance)) +
+  geom_boxplot(mapping = aes(x = "Unformity", y = Uniformity)) +
+  geom_boxplot(mapping = aes(x = "Clean cup", y = Clean_Cup)) +
+  geom_boxplot(mapping = aes(x = "Sweetness", y = Sweetness)) +
+  labs(title = "Relationship of Processing method & Scores", x = "Quality Measures", y= "Score") +
+  theme(plot.title = element_text(hjust = 0.5), axis.title = element_text(face = "bold")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_wrap(~ Processing_Method)
+```
+
+**Interesting findings and key take away messages**
+
+* The coffee quality scores of _Clean Cup_ _Sweetness_ and _Uniformity_ have the same values for all processing methods. Thus, they are not regarded as important.
+* The processing method with **most flavor** was **natural**.
+* Surprisingly, the processing method with **most acidity** was **washed**.
+* Interestingly the processing method with **most balance** was **natural**.
+
+# Answering Question 8 - Coffee varieties with most quakers(unripened beans)
+
+To answer question 8, the following steps are required:
+
+  1. Create a data frame named _quakers_variety_ to count the number of quakers per coffee variety.
+  - Selecting the the columns of _Variety_ and _Quakers_.
+  - Grouping information by variety.
+  - Summarising information on a new variable _Count_quakers_ that count the number of quakers per coffee variety.
+  - Ordering in descending order the information.
+  - Removing "N/A" values.
+  2. Obtaining the 10 varieties with most quakers and storing the information in a new variable named _top10_quakers_.
+  3. Plotting the information in a horizontal bar chart.
+  
+```{r}
+# Creating a data frame quakers_variety to count the number of quakers per variety
+quakers_variety <- arabica_coffee %>% 
+  select(Variety, Quakers) %>% 
+  group_by(Variety) %>% 
+  summarise(Count_quakers = sum(Quakers)) %>%
+  arrange(-Count_quakers) %>% 
+  drop_na()
+
+# Obtaining the 10 varieties with most quakers (imperfections)
+top10_quakers <- quakers_variety %>% 
+  slice_head(n =10)
+
+# Plotting the top 10 varieties with most quakers
+ggplot(data = top10_quakers) +
+  geom_col(mapping = aes(reorder(x = Variety, Count_quakers), y = Count_quakers, fill = Variety)) +
+  labs(title = "Coffee varieties with most imperfections" , x = "Coffee variety", 
+       y = "Number of quakers") +
+  theme(axis.text.x = element_text(angle = 90),
+        axis.title = element_text(face = "bold"), 
+        plot.title = element_text(hjust = 0.5)) +
+  # Removing the unnecessary legend
+  theme (legend.position = "none") +
+  # Changing bar chart from vertical to horizontal
+  coord_flip()
+```
+
+**The variety with most unripened coffee beans was Caturra, followed not so closely by Bourbon**
+
+# References
+
+The following references were used for consultation to generate this report:
+
+_Youtube channels_
+
+* [Statistics Globe](https://www.youtube.com/@StatisticsGlobe)
+
+* [R programming 101](https://www.youtube.com/@RProgramming101)
+
+_Forum_
+
+* [Stack overflow](https://stackoverflow.com/)
