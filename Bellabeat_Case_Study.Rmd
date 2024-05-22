@@ -1,0 +1,907 @@
+---
+title: "Revolutionizing Bellabeat's Marketing Strategy with Data-Driven Insights"
+author: "Lino Gaxiola-Camacho"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    toc_float:
+      collapsed: no
+  pdf_document: 
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    fig_caption: true
+    df_print: kable
+    highlight: tango
+    latex_engine: xelatex
+---
+
+# Executive summary
+
+Bellabeat is a high-growth company that manufactures health and wellness products for women, including the Ivy+ health tracker, Leaf Urban wellness tracker, and Leaf Chakra tracker. As the company looks to update its marketing strategy, this case study analyzes smart device usage data from a publicly available Fitbit dataset to glean insights about consumer trends.
+After reviewing market research on the $1.8 trillion wellness industry, key areas of focus emerged - women's health, healthy aging, weight management, in-person fitness, gut health, sexual health, and sleep. The analysis specifically highlighted women's health and sleep as underserved, high-potential segments.
+The Fitbit data analysis revealed several important insights that Bellabeat can apply:
+
+Most users wore their fitness tracker daily, suggesting frequent wear is important to encourage.
+Users who wore the device more often tended to log more calories burned.
+Midweek (Wednesday) and evening (5-7pm) were high activity periods for users.
+Many users were overweight/obese, highlighting an opportunity in the weight management space.
+Some users exhibited abnormally high heart rates at rest, suggesting health issues to monitor.
+Sleep quality was poor, with users spending more time restless than asleep.
+
+Based on these findings, recommendations for Bellabeat's marketing strategy include:
+
+1. Promote the fashionable, interchangeable design of Ivy+ to drive daily usage.
+2. Time digital ads/promotions around high activity periods like Wednesday evenings.
+3. Leverage weight management capabilities through promotions or fitness communities.
+4. Emphasize sleep tracking and improving sleep quality through product positioning.
+5. Pioneer in menopause monitoring, a niche market which is not yet fully addressed.
+
+By implementing an updated marketing approach focused on these areas, Bellabeat can effectively appeal to the preferences of its core female audience while tapping into key growth segments like women's health and sleep.
+
+# Bellabeat 
+
+![](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Bellabeat Banner.PNG)\
+
+## Introduction
+
+Bellabeat is a women’s wellness company that developed one of the first wearables specifically designed for women and has since gone on to create a portfolio of digital products for tracking and improving the health of women.
+
+It is focused on creating innovative health and wellness products for women, our mission is to empower women to take control of their health by providing them with technology-driven solutions that blend design and function.
+
+## Background information
+
+Bellabeat was founded in **2014** by **Urška Sršen** and **Sandro Mur** through the Y Combinator Program, where they raised $4.5 million euros as seed capital. In 2015, they launched their first product _Leaf Nature_, a wearable that could track activity, sleep, stress resistance, period and pregnancy tracking. 
+
+By 2016, Bellabeat had opened offices around the world and launched 3 new products. Their products became available through a growing number of online retailers in addition to their own e-commerce channel on their website. The company has invested in traditional advertising media:
+
+  * Radio
+  * Out-of-home billboards
+  * Print
+  * Television
+  
+However, it focused on digital marketing extensively. This marketing campaign focused on:
+
+  * Google Search
+  * Facebook
+  * Instagram 
+  * Twitter
+  * Youtube ads
+  * Google Display Network for key marketing dates
+
+### Stakeholders information
+
+**Urška Sršen** - **Co-founder & CPO**  
+Urska is the detail-obsessed execution force behind Bellabeat’s products which have been continuously recognized as some of the most innovative products launched within the digital health market.
+ 
+Urska has a background in fine arts and design, studying fine arts sculpture at ALUO Ljubljana and Kuvataideakatemia in Helsinki. Urska was chosen by Forbes as the ambassador of the Technology field for their first European 30 under 30 list launched in 2016. She also received the Jabolko Navdiha (Apple of Inspiration) Award from the President of the Republic of Slovenia.
+ 
+Urska spends most of her free time outdoors and is passionate about women’s rights, sci-fi and sustainable development.
+
+**Sandro Mur** - **Co-founder & CEO**  
+Sandro Mur is a serial entrepreneur with an engineering background. Growing up, his sources of inspiration were his mother and grandmother, both business-oriented and progressive women.
+
+At Bellabeat, Sandro is responsible for strategy, finance and growth. Given his passion for startups, Sandro created Bellabeat’s own investment program to nurture interesting local talent and technology.
+
+In his free time, Sandro is a kitesurfer, amateur racecar driver, and a dog dad. Being active in sports and his many hobbies helped him grow as a startup founder and leader of a fast growing and diverse team of mostly young professionals.
+
+### Products and products description
+
+#### [Ivy+ Health Tracker](https://support.bellabeat.com/hc/en-us/categories/360002727059-IVY)
+Ivy+ health tracker is the only tracker designed and engineered for women, revealing a comprehensive and accurate state of body and mind.
+
+**Features**
+
+  * Correlates menstrual cycle data, lifestyle habits and biometric readings
+  * Identifies self-care gaps, and suggests improvements
+  * Calculate Wellness and Readiness Score
+  * Tracks skin temperature and allows to track hydration
+  * Monitors heart rate, cardiac coherence, respiratory rate, activity, and sleep
+  * Lightweight, safe for skin, and hypoallergenic
+  * Algorithms calibrated to female bodies
+
+![Ivy+ Bracelet](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Ivy_plus.PNG){width=200}
+
+#### [Leaf Urban](https://support.bellabeat.com/hc/en-us/categories/201573705-Leaf)
+Leaf Urban is a wellness tracker that combines fashion with function to help in raising well-being to the next level and to become in sync with the body, mind, and soul.
+
+**Features**
+
+  * Optimised for women"s health
+  * Can be worn as bracelet, necklace or clip
+  * Tracks activity, sleep, stress, meditation and reproductive health
+  * Hypoallergenic
+  * Water resistant
+  
+![Leaf Urban Collar](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Leaf Urban.PNG){width=100}
+
+#### [Leaf Chakra](https://support.bellabeat.com/hc/en-us/categories/201573705-Leaf)
+The Chakra clips a wellness tracker made of stainless steel and natural crystals
+
+**Features**
+
+  * Optimised for women's health
+  * Can be worn as necklace or clip
+  * Tracks activity, sleep, stress, meditation and reproductive health
+  * Hypoallergenic
+  * Water resistant
+  
+![Leaf Chakra Collar](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Leaf Chakra.PNG){width=100}
+
+## Problem description
+
+The **marketing strategy** of Bellabeat requires **reshaping and redirection**. Sršen acknowledges that an analysis of Bellabeat’s available consumer data would reveal more opportunities for growth. As a result, she wants the _marketing analytics_ team to focus on a product and analyze smart device usage data to gain insight into how people are  using smart devices. Then, using this information, she would like high-level recommendations for how these trends can inform the marketing strategy.
+
+Sršen suggests to use data of _non-Bellabeat smart devices_ and apply it to a Bellabeat device. She encourages the use of public data to explore smart devices use. In particular, she points to a data set of **Fitbit** available in [_Kaggle_](https://www.kaggle.com/datasets/arashnic/fitbit). 
+
+## Business objectives
+
+**1.** To provide trends information about smart devices usage.\
+**2.** To define ways to apply trends to Bellabeat customers.\
+**3.** To develop a marketing strategy for Bellabeat customers.\
+  
+# Health and wellness trends
+
+The global wellness market will be worth **$1.8 trillion dollars** in **2024** according to a [_McKinsey report_](https://www.mckinsey.com/industries/consumer-packaged-goods/our-insights/the-trends-defining-the-1-point-8-trillion-dollar-global-wellness-market-in-2024). Currently, there are _5 trends_ reshaping the health and wellness market:
+
+  1. Health monitoring at home 
+  2. **Biomonitoring and wearables**
+  3. Personalised products from generative Artificial Intelligence.
+  4. Preference for clinically proven ingredients over natural ingredients.
+  5. Purchases persuaded by doctor's recommendations.
+
+Of those 5 trends, ther are 7 subset areas of growth in the wellness space:
+
+  1. **Women's health**
+  2. Healthy aging
+  3. Weight management
+  4. In-person fitness
+  5. Gut health
+  6. Sexual health
+  7. _Sleep_
+
+**Women's health** has been underserved and underfunded. A survey of 1,099 women showed that _47%_ of purchases in the US was on _menstrual-care products_ whilst a 28% did in sexual health products. However, most money spent on average has been on menopause products followed by pregnancy/post-partum products and fertility devices.
+
+_Sleep_ has consistently ranked second-highest in the health and wellness priority for consumers. Nonetheless, is the area where consumers have emphasized as the most unmet needs. In particular, consumers want products to address cognitive functioning, _stress_ and anxiety management. Thus, a few tech companies have been able to provide an ecosystem that improves sleep holistically.
+
+## Fitness trackers market
+
+The fitness trackers are projected to generate a revenue of **74.6 billion** dollars in **2024** with an expected Compound Annual Growth Rater (CAGR) of **8.47%** from 2024-2028 according to data from [_Statista_](https://www.statista.com/outlook/hmo/digital-health/digital-fitness-well-being/fitness-trackers/worldwide). Fitness trackers can be classified according to their ordered market share in the following types in accordance with [_Business Insights_](https://www.fortunebusinessinsights.com/fitness-tracker-market-103358):
+
+  1. Smart watches
+  2. Fitness bands
+  3. Smart glasses
+  4. Smart clothing
+  5. Others (e.g. Smart jewellery)
+
+The overall fitness tracker market is dominated by 5 key players based on information from [_Mordor Intelligence_](https://www.mordorintelligence.com/industry-reports/fitness-tracker-market):
+
+  1. Apple
+  2. Fitbit
+  3. Samsung Electronics
+  4. Fossil Group
+  5. Huawei Technologies
+
+## Bellabeat main competitors
+
+Although Bellabeat is a wellness company. It is focused on wearables for tracking and improving health for women. Thus, as a fitness tracker blending technology with jewellery, it shares the market with similar technologies such as:
+
+  * [_Fitbit_](https://www.fitbit.com/global/uk/products/trackers) - Fitness tracker
+  * [_Oura ring_](https://ouraring.com/) - Ring tracker
+  * [_Ava_](https://www.avawomen.com/order-fertility) - Fertility and cycle tracker for women
+  * [_Ringly_](https://ringly.com/) - Smart jewellery for women
+  * [_Caeden_](http://www.caeden.com/sona/) - Fitness tracker for women
+  
+# Data information
+
+Having briefly explored the market trends, market share and main competitors, it is important to explore the the trends about smart devices usage using data of non-Bellabeat smart devices like the **Fitbit** database, which can help in developing insights to drive Bellabeat's market strategy.
+
+## General information
+
+The dataset was generated by respondents to a survey between 12/March/2016 to 12/May/2016 in which 30 Fitbit users consented to the submission of personal tracking data from different types of Fitbit trackers and individual behaviours and preferences. These information includes:
+  
+  * Minute-level output for physical activity
+  * Heart rate
+  * Sleep monitoring
+
+The information was made available thanks to the work of Robert Furberg, Julia Brinton, Michael Keating and Alexa Ortiz and was originally published in [_Zenodo_](https://zenodo.org/records/53894#.YMoUpnVKiP9), an open repository for research data and publications.
+
+## Metadata
+
+To begin to understand the dataset, it is important to explore all the different variables included in the information, as well as their units of measurement and format in which they are presented. The information about the data can be found in the following link:
+<https://www.fitabase.com/media/1930/fitabasedatadictionary102320.pdf>
+
+## Data organisation
+
+There are two folders with information, one containing 11 csv files with data from 12/March/2016 - 11/April/2016 and another one with 18 csv files from 12/April/2016 - 12/May/2016. Aiming to focus on the information of a single month with the most information content, the second dataset was selected for further analysis.
+
+```{r include=FALSE}
+#  Tidyverse to work with information, data.
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+install.packages("tidyverse")
+library(tidyverse)
+# Loading gt package to work with tables
+install.packages("gt")
+install.packages("gtsummary")
+library(gt)
+library(gtsummary)
+```
+
+```{r Creating a table with gt, echo=FALSE}
+#Creating table in R with table name and description of each
+Dataset_name <- c("dailyActivity_merged", "dailyCalories_merged", "dailyIntensities_merged",
+                  "dailySteps_merged", "heartrate_seconds_merged", "hourlyCalories_merged", 
+                  "hourlyIntensities_merged", "hourlySteps_merged", 
+                  "minuteCaloriesNarrow_merged", "minuteCaloriesWide_merged", 
+                  "minuteIntensitiesNarrow_merged", "minuteIntensitiesWide_merged", 
+                  "minuteMETsNarrow_merged", "minuteSleep_merged", "minuteStepsNarrow_merged", 
+                  "minuteStepsWide_merged", "sleepDay_merged", "weightLogInfo_merged"
+                  )
+Information <- c("Daily steps, total daily distance in km, daily tracker distance in km, number of logged activities, daily calories burnt, activity by level of intensity in distance (km) and time (minutes)", "Daily calories burnt", "Daily activity by level of intensity in distance (km) and time (minutes)", "Daily steps taken", "Heart rate ideally measured every 5 seconds", "Hourly calories burnt", "Hourly total intensities and average intensity per hour", "Hourly steps taken", "Minute calories burnt (narrow format)", "Minute calories burnt (wide format)", "Minute intensity (sedentary, light, moderate, active)(narrow format)", "Minute intensity (sedentary, light, moderate, active) (wide format)", "Minute metabolic equivalent of task (MET) - Ratio of the rate at which a person expends energy relative to its mass whilst performing an activity(narrow format)", "Minute sleep state (asleep, restless or awake) and unique log Id for record taken", "Minute steps taken(narrow format)", "Minute steps taken (wide format)", "Daily sleep records with total minutes asleep (light, deep and REM) and time in bed (awake, light, deep and REM)", "Weight in kg and lb, fat percentage, body mass index and method of data collection (Manually collected or synched with a fitbit scale)"
+                 )
+# Converting matrix column vectors into data frames and creating a a new data frame
+Dataset_name <- data.frame(Dataset_name)
+Information <- data.frame(Information)
+Datasets_information <- mutate(Dataset_name, Information)
+# Creating a customised table
+Dataset_table <- Datasets_information %>% 
+gt() %>% 
+  cols_label(Dataset_name = "Name", Information = "Description of data") %>% 
+  tab_header(title = "Datasets information") %>%
+  tab_style(
+            style = list(cell_text(style = "italic")),
+            locations = cells_body(columns = Dataset_name)
+           ) %>% 
+  opt_stylize(style = 3, color = "gray", add_row_striping = TRUE)
+# Code for saving gt table as .docx, html, or ltx file  
+# gt::gtsave(filename = "Dataset_table_information.html")
+```
+
+![Datasets table with data description](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Datasets Table.PNG)\
+
+## Limitations of data
+
+Datasets contain the information about 30 fitbit users that was collected from April to May 2016. To ensure that working data is a good source of information, it must *ROCCC*. Thus, it must be:
+  
+  * **R**eliable
+  * **O**riginal
+  * **C**omprehensive
+  * **C**urrent
+  * **C**ited
+
+**Reliable**:\
+In 2023, there were 38.5 million active users of Fitbit according to the source [_Company Data_](https://www.businessofapps.com/data/fitbit-statistics/). However, the dataset only encompasses 30 users, which is the smallest sample size where an average result starts to represent the average result correspondent to a population. Therefore, it does not accurately represent the behaviour of the whole population, leading to a _limitation_ in **data integrity**.
+
+In order to ensure a representative sample of the population, a sample size can be calculated using a [_calculator tool_](https://www.calculator.net/sample-size-calculator.html). Thus, for the 38.5 million users, it can be estimated that a minimum of _385_ people should have filled the survey, allowing a confidence level of 95% and a 5% margin or error.
+
+The Fitbit dataset does not specify the sex of the 30 users that filled the survey. Hence, it is not possible to understand the proportion of males and females from the whole population studied. Since Bellabeat is a wellness company focused on the market of the women, this dataset does not accurately represent a reliable source for the company, leading to a _limitation_ in **sampling bias**, where the data is  unrepresentative and can skew the results.
+
+**Original**:\
+The dataset was collected via survey by Amazon Mechanical Turk and was potentially sold to Fitbit for analysis purposes. As a result, the dataset can be classified as **second party data**. Although the information is now of public domain, it is difficult to validate its information, data collection methods and more techniques that can ensure data integrity. Consequently, there is a _limitation_ associated to **data misalignment**.
+
+**Comprehensive**:\
+A comprehensive data provides all the essential details needed to answer the questions that may arise and find their solution. Although the dataset is extensive, it is complex to understand without investigating further documents including metadata. Moreover, since the data was captured directly by individuals, there was not a clear methodology followed where the users were instructed how/when/where to take data measurements, leading to a dataset that is more difficult to comprehend. As a result, the dataset has a _limitation_ of being **incomplete**.
+
+**Current**:\
+Information present in the dataset was collected for 1 month 8 years ago. Although it is difficult to define if the data will still be representative nowadays, certainly the algorithms used to calculate all of the variables thereby studied have changed and became more robust. As a result, the dataset is believed to have a _limitation_ associated with **up-to-date information**.
+
+**Cited**:\
+The Fitbit dataset has been made available in a research repository for its use for the general public. In doing so, it has became a good source of information that has been continuously studied given that there is limited available of information of its kind. 
+
+In summary, the Fitbit dataset is a limited data source that cannot accurately help Bellabeat in driving its marketing strategy. Nonetheless, it is a good source of information that can be used to generate insights that are applicable to Bellabeat, which can aid in the resolution of the established objectives.
+
+# Data processing and manipulation
+
+Data processing and manipulation requires to preserve data integrity whilst cleaning the data to create and transform it in a way that can be tested to help in the generation of insights. Therefore, this through process must be accurately described to pinpoint all changes made.
+
+For this case study, the datasets will be manipulated and transformed in SQL (Big Query) to then generate insightful dashboards through Tableau business intelligence tool. Last, reporting of all the results will me made in R Markdown to facilitate the generation of a PDF and HTML report file.
+
+## Data importation
+
+All 18 available CSV files were imported in Big Query. However, an issue arose with all of the files containing hourly and minute data. They were presented with the format _'MM-DD-YYYY HH:MM:SS'_; as a result, this column present in 17 files had to be imported as a string format in all tables present.
+
+![Example of _heartrate_seconds_merged_ table imported in Big Query](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Example import table.PNG)
+
+## Data formatting
+
+During the process of formatting, all datasets were explored to check for inconsistencies of data and incorrect formatting. 
+
+1. The first step carried out consisted in transforming the 'string' format for dates into 'date' format using the _CAST_ function.
+  * Starting with _Daily_Calories_ table, the CAST function fails due to the string being in the format 'MM-DD-YYYY'.
+    * To solve problem, the _PARSE_DATE_ function is used to avoid query fail and the result is saved as a new table.
+2. Process was repeated for the rest of the datasets and they were saved as a new table too. Thus, changes to the SQL code were adjusted to fit the dataset that was modified.
+3. For datasets involving a date and time, the _PARSE_DATETIME_ function was used to convert string to date format.
+4. To avoid unnecessary white spaces in the data, the _TRIM_ function can help to transform data. Nonetheless, since all dates have been changed successfully from 'string' to 'date', this process is skipped.
+5. Absence of information was checked on all datasets. The only dataset with missing information was the _Weight_Log_Info_, which had its cells successfully filled with _null_ values for the _Fat_ column.
+  * After running a query, it was found that there were 67 rows and 65 of those had null values.
+
+### SQL Code chunks
+**Step 1**:\
+`{sql Transform date - string to date, connection=}`\
+`Changing string format of date column to date`\
+`SELECT`\
+`Id, PARSE_DATE('%m/%d/%Y', ActivityDay) AS Activity_Day, Calories`\
+`FROM`\
+`project-portfolio-418809.Bellabeat_Case_Study.Daily_Calories`\
+
+**Step 3**:\
+`{sql Transform date - string to datetime, connection=}`\
+`SELECT`\
+`Id, PARSE_DATETIME('%m/%d/%Y %r', Time) AS Date_Time, Value`\
+`FROM`\
+`project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Seconds`\
+
+**Step 5**:\
+`{sql Count null values in Weight dataset, connection=}`\
+`SELECT`\
+`COUNT(*) AS Total_rows,`\
+`SUM(CASE WHEN Fat IS NULL THEN 1 ELSE 0 END) AS Total_null_rows`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Weight_Log_Info`\
+
+## Data transformation and cleaning
+
+Transformation of data consisted in making changes into the datasets to prepare them for further work into the analysis phase.Cleaning of data involves the following steps:
+
+  1. Make format consistent
+  2. Remove extra spaces or blanks
+  3. Remove duplicates
+  4. Remove unwanted data
+  5. Fix typos mistakes
+  6. Inconsistent capitalisation
+  7. Incorrect punctuation
+
+Since process 1 and 2 had already being carried out in data formatting, process 3 was proceed. To remove duplicates, unique entries were verified in each of the datasets.
+
+I. Duplicates are reviewed in _Daily_Activities_ dataset.\
+  * No duplicates found\
+
+II. Process is repeated for the rest of datasets\
+  
+  * The only dataset with duplicates is the _Sleep_Day_ dataset, with 3 duplicates.\
+    * The 3 duplicates are removed, reducing the dataset from _413_ to _410_ data entries.
+    
+**Id**|**Sleep Day**|**Number_IDs**|
+:----:|:-----------:|:------------:|
+4388161847|2016-05-05T00:00:00|2
+4702921684|2016-05-07T00:00:00|2
+8378563200|2016-04-25T00:00:00|2
+
+Process 4 consists in removing unwanted data. Upon inspection of the datasets _Daily_Activity_, _Daily_Calories_ and _Daily_Intensities_, it appears that the first dataset contains the information of the last two. To prove this hypothesis, a code to count the number of rows in all datasets was carried out.
+  * All datasets have _940_ rows, indicating repeated information. Thus, repeated information can be removed if there is a space issue or if desired.
+
+For processes 5-7 of cleaning and transformation of data, errors of typos, capitalisation or punctuation could not be found, leading to the completion of this task.
+
+### SQL Code chunks
+**Step 1**:\
+`{sql connection=}`\
+`-- Checking duplicates on the Daily_Actrivity dataset`\
+`SELECT`\
+  `Id, ActivityDate,`\
+  `Count(*) AS Number_IDs`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity`\
+`GROUP BY`\
+  `Id, ActivityDate`
+`HAVING`\
+  `Number_IDs >1`\
+
+**Step 2**:\
+`{sql Removing duplicates, connection=}`\
+`-- Creating a new table named Sleep_Day_Cleaned`\
+`CREATE TABLE project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day_Cleaned AS (`\
+`-- Adding a new column for counting duplicates with Row number in the right side and deleting them`\
+  `SELECT *`\
+  `FROM (`\
+    `SELECT *, ROW_NUMBER() OVER (PARTITION BY Id, Sleep_Day) Row_number`\
+    `FROM`\
+      `project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day`\
+       `)`\
+  `WHERE`\
+    `row_number = 1`\
+`)`\
+`-- Checking the new number of rows`\
+`SELECT`\
+  `COUNT(*)`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day_Cleaned`\
+    
+**Step 3**:\
+`{sql connection=}`\
+`-- Counting number of rows in Daily_Activity dataset`\
+`SELECT`\
+  `COUNT(*)`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activities`\
+
+# Data analysis
+
+When analysing the datasets, it is important to ask define the questions that need to be answered in order to fulfill the objectives established by Bellabeat. Hence, to begin with, the following questions can be investigated for the generation of important insights:
+
+  1. How many users provided information in daily activity Fitbit usage?
+  
+    * What proportion of those users provided information daily during the days of study?
+    * Can the users be classified according to a range of days that they used Fitbit?
+    
+  2. How many steps are taken, distance traveled and calories burnt from different users?
+  
+    * Do users who use Fitbit more often take more steps, cover more distance and burn more calories?
+    
+  3. Are there any users with potential heart problems?
+  
+  4. What time of the day do users usually take more steps and burnt the most calories?
+  
+  5. What proportion of the total amount of users provided weight information?
+  
+    * What is the average weight of users?
+    * What is the average body mass index of users?
+      * What proportion of users have under, normal and over values of body mass index?
+      
+  6. How many users recorded sleep time information?
+  
+    * Of the total, how many users take naps?
+    * What are some basic statistics of people that sleep?
+    * What percentage of time do users spend in bed but not asleep?
+    
+## Question 1 - Fitbit usage
+
+There are 33 users in the _Daily_Activity_ database. From those, 21 wore Fitbit on a daily basis, whilst there was 1 user that only used it for 4 days. The remaining 11 users used the device in a range of 18-30 days. As a result, it was possible to classify users according to the Fitbit usage into 3 categories - Always, Most times and Often times -.The user who only wore Fitbit for 4 days was discard it for further analysis.
+
+![Distribution of Fitbit usage by groups](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Fitbit_Usage.PNG)\
+
+_Key takeaway_: **The majority** of users used the fitness tracker every day. **Only** 1 user seldom used the device.
+
+### SQL code chunks
+**Step 1**:\
+`{sql, connection=}`\
+`-- Counting the number of users from the Daily Activity dataset`\
+`SELECT`\
+  `COUNT(DISTINCT Id) AS Number_Users`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity`\
+
+**Step 2**:\
+`{sql, connection=}`\
+`-- Counting number of days that users used Fitbit and creating a new table named\ Number_Days_Fitbit_Used_Analysis`\
+`SELECT`\
+  `Id, COUNT(Activity_Date) AS Number_Days_Used`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\ 
+  `Number_Days_Used DESC`\
+
+**Step 3**:\
+`{sqls, connection=}`\
+`-- Counting number of users that used Fitbit daily`\
+`SELECT`\
+  `Number_Days_Used, COUNT(Number_Days_Used) AS Count_Users_Daily`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Number_Days_Fitbit_Used_Analysis`\
+`GROUP BY`\
+  `Number_Days_Used`\
+`ORDER BY`\
+  `Count_Users_Daily DESC`\
+
+**Step 4**:\
+`{sqls, connection=}`\
+`-- Grouping Fitbit users by days that the device was used`\
+`WITH Number_Days_Fitbit_Used_Analysis AS (`\
+`SELECT`\
+  `Number_Days_Used, COUNT(Number_Days_Used) AS Count_Users_Daily`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Number_Days_Fitbit_Used_Analysis`\
+`GROUP BY`\
+  `Number_Days_Used`\
+`ORDER BY`\
+  `Count_Users_Daily DESC`\
+`)`\
+`SELECT`\
+  `CASE`\ 
+       `WHEN Number_Days_Used = 31 THEN 'Always'`\
+       `WHEN Number_Days_Used >=25 AND Number_Days_Used <31 THEN 'Most times'`\
+       `WHEN Number_Days_Used >4 AND Number_Days_Used <28 THEN 'Often times' END AS Categories,`\
+  `COUNT(*) AS Number_Users_Category`\
+`FROM`\
+ `project-portfolio-418809.Bellabeat_Case_Study.Number_Days_Fitbit_Used_Analysis`\
+`GROUP BY`\
+  `Categories`\
+`HAVING`\
+  `Categories IS NOT NULL`\
+  
+## Question 2 - Steps taken, distance travelled and calories burnt
+
+Of the different Fitbit groups assigned in question 1, an analysis was made to understand behaviours of users according to the 3 variables of steps taken, distance covered and calories burnt. Linear regression graphs were made in _Tableau_ to estimate the relationship between the 3 variables and the number of days that Fitbit was used, considering the average value per user.
+
+Linear regression models the relationship between a dependent variable (What needs to be predicted) and an independent variable (variable affecting the dependent variable). It fits a straight line that describes how the dependent variable changes as the independent variable changes.**R^2** measures how well the linear regression fits the data and represents the variation of results. The closer the value to **1**, the better the fit, meaning that the model can predict the dependent variable from the independent variable. This can be observed in a graph by points being closer to a line. On the other hand, a **P-value**, indicates whether or not  there is statistically significant relationship between variables; in other words, confidence. Thus, a low p-value is associated with good confidence.
+
+**Variable**|**R^2**|**P-value**|
+  :--------:|:-----:|:---------:|
+  Steps|0.33|0.1335|
+  Distance|0.40|0.0911|
+  Calories|0.96|0.0001|
+
+![Dashboard of steps taken, distance travelled and calories burnt](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Dashboard Calories & Steps.PNG)\
+
+_Key takeaway_:
+  
+  * Fitbit users who **used** the tracking device **more often** tended to burn **more calories**.
+    * It is difficult to determine if calories burnt is related to more available data about calories being input. 
+
+### SQL code chunks
+**Step 1**:\
+`{sqls, connection=}`\
+`-- Obtaining the sum of steps, distance and calories per user and saving it on a new table named`\
+`Daily_Activity_per_Days_Used`\
+`SELECT`\
+`Id, SUM(Total_Steps) AS Sum_Steps, SUM(Total_Distance) AS Sum_Distance, SUM(Calories) AS Sum_Calories, COUNT (Id) AS Days_Used`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity`\
+`GROUP BY`\
+  `Id`\
+`HAVING`\
+  `Days_Used >4`\
+`ORDER BY`\
+  `Sum_Steps`\
+
+## Question 3 - Users with potential heart problems
+
+According to the [_British Heart Foundation_](https://www.bhf.org.uk/informationsupport/how-a-healthy-heart-works/your-heart-rate), a normal heart rate is between 60-100 beats per minute whilst resting. A rate above 100 when resting indicates a potential problem of a condition called tachycardia, which needs to be looked at by a medical specialist. On the other hand, a rate below 60 suggests bradycardia, which also needs to be treated unless it is present in very fit individuals, who can experience a rate below 60 even at rest.
+
+Detecting heart rhythm issues (arrhythmia) are more complex to detect with fitness trackers because they need to be worn during a certain period of time in order to detect abnormal values whilst performing different intensity levels of activity. Therefore, unless combined with other parameters of study such as oxygen levels, steps, electrical heart rhythm, among others, heart rate alone cannot accurately predict heart problems. Consequently, this analysis was focused solely in the heart rate during sedentary level of activity.
+
+There are 14 users in the _Heart_Rate_Seconds_ database. From those, special attention was paid to those who experienced a hear rate <60 or >100 when they were in a sedentary level of activity. Surprisingly, all 14 users experienced what could be considered as abnormal heart rates.
+
+  **Id**|**Abnormal Heart Rate Count**|
+  :----:|:--------------------------:|
+  4388161847|20596|
+  6962181067|19984|
+  5553957443|18993|
+  5577150313|17408|
+  **6117666160**|11851|
+  8792009665|11737|
+  2347167796|11556|
+  **4558609924**|11263|
+  2022484408|6879|
+  **7007744171**|6778|
+  **4020332650**|3560|
+  **6775888955**|2216|
+  8877689391|2085|
+  2026352035|111|
+
+Since very fit individuals can experience low levels of heart rate( i.e. <60), parameters were adjusted just to focus on those individuals that experienced only high heart rate values (i.e. >100) whilst resting (Step 7). After new results analysis, 4 users had less than 10 abnormal high values, 5 users had between 10 and 60 high values and the remaining 5 had more than 100 abnormal values, indicating that they should potentially seek help from a medical specialist to verify that there is no health problem that they should be aware of.
+  
+  **Id**|**Abnormal High Heart Rate Count**|
+  :----:|:--------------------------:|
+  7007744171|219|
+  6775888955|163|
+  6117666160|160|
+  4020332650|116|
+  4558609924|104|
+
+_Key takeaway_: 
+
+  * There are **5** who have **abnormal heart rate values** and who should visit the medical specialist to verify that there is no threatening health condition that they should be aware of.
+
+### SQL code chunks  
+**Step 1**:\
+`{sql, connection=}`\
+`-- Counting the number of users from the Daily Activity dataset`\
+`SELECT`\
+  `COUNT(DISTINCT Id) AS Number_Users`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Seconds`\
+
+**Step 2**:\
+`{sql, connection=}`\
+`-- Filtering Minute Intensities dataset to focus in time where users were sedentary. Information was\ saved as a new table called Minute_Intensity_Sedentary_Heart`\
+`SELECT *`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Minute_Intensities`\
+`WHERE`\
+  `Intensity = 0`\
+
+**Step 3**:\
+`{sql, connection=}`\
+`-- Focusing on 14 users that provided values of heart rate in sedentary intensity activity`\
+`SELECT *`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Minutes_Intensity_Sedentary_Heart`\
+`WHERE`\
+  `Id = 2026352035 OR Id = 4558609924 OR Id = 8877689391 OR Id = 2347167796 OR Id = 4388161847 OR`\
+  `Id = 6775888955 OR Id = 5553957443 OR Id = 5577150313 OR Id = 4020332650 OR Id = 6117666160 OR`\
+  `Id = 7007744171 OR Id = 2022484408 OR Id = 8792009665 OR Id = 6962181067`\
+
+**Step 4**:\
+`{sql, connection=}`\
+`-- Creating a local table with heart rate values <60 & >100 and joining the information with\ Minute_Intensity_Sedentary_Heart. Then, table was saved  as a new table called Heart_Rate_Intensity`\
+`WITH Heart_Rate_Seconds2 AS (`\
+  `SELECT *`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Seconds`\
+`WHERE`\
+  `Value <60 OR VALUE >100`\
+`ORDER BY`\
+  `Id, Date_Time`\
+`)`\
+`SELECT *`\
+`FROM`\
+`project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Seconds`\
+`JOIN`\
+`project-portfolio-418809.Bellabeat_Case_Study.Minute_Intensity_Sedentary_Heart`\
+`ON`\
+  `Date_Time = Activity_Minute`\
+  
+**Step 5**:\
+`{sql, connection=}`\
+`-- Filtering  values that match Id and Date and Time from the newly created table Heart_Rate_Intensity\ to focus on users with values of interest.`\
+`SELECT`\
+  `Id, Date_Time, Value, Intensity`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Test_HearRate`\
+`WHERE`\
+ `Id = Id_1 AND Date_Time = Activity_Minute`\
+
+**Step 6**:\
+`{sql, connection=}`\
+`-- Analysing number of times that an abnormal heart rate was experienced per user`\
+`SELECT`\
+  `Id, COUNT (Id) AS Abnormal_Heart_Rate_Count_User`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Intensity`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\
+  `Abnormal_Heart_Rate_Count_User DESC`\
+
+**Step 7**:\
+`{sql, connection=}`\
+`-- Analysing number of times that an abnormal high heart rate was experienced per user`\
+`SELECT`\
+  `Id, COUNT (Id) AS Abnormal_Heart_Rate_Count_User`\
+`FROM1`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Heart_Rate_Intensity`\
+`WHERE`\
+  `Value >100`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\
+  `Abnormal_Heart_Rate_Count_User DESC`\
+
+## Question 4 - Hours of the day with most activity
+
+There are 33 users in both _Hourly_Steps_  and _Hourly_Calories_ databases. To better understand the days and hours of the day with most steps taken and calories burnt, a dashboard in _Tableau_ was generated. Interestingly, it was found that the day with most activity was Wednesday whilst Sunday was for the least. Moreover, between 5 to 7 pm was the time of the day with most activity. Between 3 to 4 am was the time with the least activity, suggesting that users were most likely asleep during this time.
+
+![Dashboard hours with most activity](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Dashboard calories and steps by hours.PNG)\
+
+_Key takeaway_:
+
+  1. Always, most times and often times users had a similar pattern of steps taken and calories burnt for days and hours analysed.
+  2. **Wednesday** was the day of the week with most activity among all users.
+  3. **Sunday** was the day of the week with the least activity among all users.
+  4. Between **5-7 pm** was the time of the day that users most took steps and burnt calories.
+  5. Between **3-4 am** was the time of the day with the least activity.
+
+### SQL code chunks
+**Step 1**:\
+`{sql, connection=}`\
+`-- Joining tables from hourly calories and number of days that Fitbit was used and creating a new table\ named Hourly_Calories_Group`\
+`SELECT *`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Hourly_Calories` `AS Hourly_Calories`\
+`JOIN`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity_per_Days_Used` `AS Fitbit_Usage`\
+`ON`\
+  `Hourly_Calories.Id = Fitbit_Usage.Id`\
+
+**Step 2**:\
+`{sql, connection=}`\
+`-- Joining tables from hourly steps and number of days that Fitbit was used and creating a new table\ named Hourly_Steps_Group`\
+`SELECT *`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Hourly_Steps` `AS Hourly_Steps`\
+`JOIN`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Daily_Activity_per_Days_Used` `AS Fitbit_Usage`\
+`ON`\
+  `Hourly_Steps.Id = Fitbit_Usage.Id`\
+
+## Question 5 - Weight information
+
+There are only 8 users in the _Weight_Log_Info_ database. Of those, the maximum weight was a user of 133.5 kg, the minimum weight was 52.6 kg and there was an average weight of 72.0±13.9 kg. According to the [_NHS_](https://www.nhsinform.scot/healthy-living/food-and-nutrition/healthy-eating-and-weight-loss/body-mass-index-bmi/), body mass index (BMI) is a method to used to categorise people's weight without considering body composition like bone density, muscle and fat. The BMI can be classified into 5 bands:
+
+  * Less than 18.5 - underweight
+  * From 18.5 to 24.9 - **Healthy range**
+  * From 25.0 to 29.9 - Overweight
+  * From 30.0 to 39.9 - Obesity
+  * More than 40.0 - Severe obesity 
+
+BMI can be calculated with the following formula:
+
+$BMI = Weight (kg) / Height^{2} (m)$
+
+For the dataset _Weight_Log_Info_, the maximum, minimum, and average BMI were 47.5, 21.4 and 25.1±3.0 respectively, resulting in 1 user with severe obesity, 4 with overweight and the remaining 3 within the healthy range.
+
+![Dashboard with weight information](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Dashboard Weight.PNG)\
+
+_Key takeaway_:
+
+  * The *majority* of users were overweight or obese.
+
+### SQL code chunks
+**Step 1**:\
+`{sql, connection=}`\
+`-- Counting the number of users from the Weight_Log_Info dataset`\
+`SELECT`\
+  `COUNT(DISTINCT Id) AS Number_Users`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Weight_Log_Info`\
+
+**Step 2**:\
+`{sql, connection=}`\
+`-- Obtaining basic statistics calculations of users' weights`\
+`SELECT`\ 
+  `MAX(Weight_kg) AS Max_Weight, MIN(Weight_kg) AS Min_Weight, AVG(Weight_kg) AS Average_Weight,\ STDDEV(Weight_kg) AS Std_Deviation`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Weight_Log_Info`\
+
+**Step 3**:\
+`{sql, connection=}`\
+`-- Obtaining basic statistics calculations of users' BMI`
+`SELECT`\ 
+  `MAX(Body_Mass_Index) AS Max_BMI, MIN(Body_Mass_Index) AS Min_BMI, AVG(Body_Mass_Index) AS Average_BMI,\ STDDEV(Body_Mass_Index) AS Std_Deviation`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Weight_Log_Info`\
+
+**Step 4**:\
+`{sql, connection=}`\
+`-- Obtaining BMI to classify individuals according to their BMI and height to determine sex`
+`SELECT`\
+  `Id, AVG(Weight_kg) AS Avg_Weight, AVG(Body_Mass_Index) AS Avg_BMI, AVG(SQRT(Weight_kg /\ Body_Mass_Index)) AS Avg_Height`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Weight_Log_Info`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\
+  `Avg_BMI DESC`\
+
+## Question 6 - Sleep information
+
+There are 24 users in the _Sleep_Day_ database. These can be classified into 4 categories according to the number of sleeps recorded in a month - Every day, Most days, Some days and Few days -. Of all, only 3 users recorded their sleep every day (31 days), 9 users recorded between 30 and 20 sleeps in a month, 3 input between 19 and 10 sleeps, and the remaining 9 users provided information about less than 10 sleeps. This behaviour suggests that there was either reluctance to record this information or perhaps there was discomfort in sleeping with the tracking device on. 
+
+Given that sleep was an important trend in the field of health and wellness, this concept was further studied. Recommended sleep hours vary according to age, with adults being recommended 7 hours or more in accordance with recommendations from [_SleepFoundation_](https://www.sleepfoundation.org/how-sleep-works/how-much-sleep-do-we-really-need). Interestingly, results indicated that only 45.8% of users complied with this recommendation. Furthermore, 3 users recorded average daily sleeps below 3 hours, indicating either a poor sleep or that they removed the device during sleep recording process. Another interesting finding is that  50% of all users logged more than 1 sleep per day, suggesting that half of the users took naps during the time they used the Fitbit tracker. 
+
+Surprisingly, of all the time users spent in bed, they spent more time restless in bed than asleep. This finding suggest two possible things. The first potential case is that they had trouble to sleep and they spent plenty of time in bed without successfully reaching the asleep state. The second case could be that they spent time awake in bed resting without sleep, whether after waking up or before trying to go to sleep. For instance, reading, watching television or any other activity. Either way, there is a big area of opportunity to help users on addressing cognitive functioning, stress and anxiety management to help them get a better sleep and turn this data around.
+
+![Dashboard with sleep information](C:/Users/Lino Gaxiola/Desktop/CV/Data Analyst Portfolio/Bellabeat Case Study/Images/Dashboard Sleep.PNG)\
+
+_Key takeaway_:
+
+  1. Users who wore Fitbit during more time do not necessarily record more sleeping information.
+  2. Only **45.8** of users sleep more than the recommended time.
+  3. **50 %** of users took a nap.
+  4. Users spent **more time in bed** than **asleep**.
+  
+### SQL code chunks
+**Step 1**:\
+`{sql, connection=}`\
+`-- Counting the number of users from the Sleep_Day dataset`\
+`SELECT`\
+  `COUNT (DISTINCT Id) AS Number_Users`\
+`FROM`\
+ `project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day_Cleaned`\
+
+**Step 2**:\
+`{sql, connection=}`\
+`-- Counting number of days that sleeps recorded per user`\
+`SELECT`\ 
+  `Id, COUNT (Id) AS Entries_User`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day_Cleaned`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\
+  `Entries_User DESC`\
+
+**Step 3**:\
+`{sql, connection=}`\
+`-- Calculating percentage of time that users spent asleep`\
+`WITH Sleep_Day_Cleaned AS(`\
+`SELECT`\ 
+  `Id, COUNT (Id) AS Entries_User, AVG(Total_Minutes_Asleep) AS Avg_Minutes_Asleep, AVG(Total_Time_In_Bed) AS Avg_Time_Bed,`\ 
+ `(AVG(Total_Minutes_Asleep) / (AVG(Total_Minutes_Asleep) + AVG(Total_Time_In_Bed))) * 100 AS\ Percentage_Asleep`\
+`FROM`\
+  `project-portfolio-418809.Bellabeat_Case_Study.Sleep_Day_Cleaned`\
+`GROUP BY`\
+  `Id`\
+`ORDER BY`\
+  `Entries_User DESC`\
+`)`\
+`SELECT`\
+  `MAX(Percentage_Asleep) AS Max_Percentage_Asleep, MIN(Percentage_Asleep) AS Min_Percentage_Asleep,`\ 
+  `AVG(Percentage_Asleep) AS Avg, STDDEV(Percentage_Asleep) AS SD_Percentage_Asleep`\
+`FROM`\
+  `Sleep_Day_Cleaned`\
+
+# Discussion
+
+Bellabeat wanted to develop a new marketing strategy. To do so, it required a deep investigation of the current market of health and wellness and a study of tracking devices usage by analysing one of his competitors - _Fitbit_. Bellabeat has 3 main products - Ivy+, Leaf Urban & Leaf Chakra -, each with different features. Based on the most up to date market of 2024, it was decided to focus more on the most robust of its products, the Ivy+ health tracker.
+
+By focusing on the Ivy+, insights generated from the analysis _Fitbit_ database could be embraced despite its numerous limitations, particularly, the inability to differentiate users from the database, which is paramount for the main consuming market of Bellabeat, women.
+
+Investigation performed on health and wellness market showed that wearables consumption are on the rise. Furthermore, the subset areas that will experience the most growth and areas with most potential growth are women's health and sleep. However, other important areas included, weight management, and fitness.
+
+Bellabeat's product Ivy+ focuses on women's health by addressing features like:
+  
+  1. Menstrual cycle
+  2. Fertility tracking through ovulation reminders
+  3. Pregnancy monitoring
+
+It also helps with promotion of good sleeping habits through features like:
+
+  4. Mindfulness through meditation
+  5. Stress sensitivity measurement
+  6. Readiness score to improve cognitive functioning
+  7. Sleep tracking 
+  
+Last, it cover some fitness features present in fitness tracking competitors, such as:
+  
+  8. Fitness activity
+  9. Heart rate
+  10. Habits & lifestyle monitoring for wellness score prediction 
+
+Although there are now plenty of competitors in the wearable market, Bellabeat's main competitors are those focused on smart jewellery and women's wearables, leading to the company sharing the market with products like _Fitbit_, Ava and Caeden.
+
+In order to fulfill business objectives that helped in applying trends to Bellabeat's customers, a data analysis process was performed on 18 public informational datasets from _Fitbit_. The process consisted in data formatting, cleaning, transformation and manipulation, leading to datasets that could be used for further analysis. Prior to analysis, a series of questions were developed to help in fulfilling the objectives and generating valuable insights. As a result of analysis, important insights were generated.
+
+## Key Insights
+
+  1. The majority of users used the fitness tracker every day. Only 1 user seldom used the device.
+  2. Fitbit users who used the tracking device more often tended to burn more calories.
+  3. The day of the week that users had the most vigorous activity was Wednesday.
+  4. The day of the week that users had the least activity was Sunday.
+  5. The range of time that users experienced the most activity was between 5-7 pm.
+  6. The range of time that users experienced the least activity was between 3-4 am.
+    * It is likely that this is caused by the users being asleep.
+  7. The majority of users were overweight or obese.
+  8. Users can be suggested when to visit a medical specialist based on their heart rate.
+  9. Less than 50% of users slept more than the recommended time.
+  10. It is estimated that 50 % of users took a nap.
+  11.Users spent more time in bed restless than in bed asleep.
+
+# Conclusions and recommendations
+
+Given that the majority of users from the Fitbit database used the tracker every day and considering that IVY+ is a jewel like fitness tracker, Bellabeat should focus on simplifying the appearance change of the bracelet to encourage women to use the device every day. In doing so, it can help women match their bracelet with the clothes that women use and facilitate the use of the device every day. Consequently, if women use IVY+ more days, they will tend to burn more calories, enhancing fitness levels of its customers.
+
+Fitbit users had the least activity on Sunday, a day usually associated with leisure. However, since Ivy+ is a bracelet that looks aesthetic and fashionable to a certain degree, it has the advantage of using its neat design to encourage women on wearing the device even when going out for recreational purposes; thus, promoting data acquisition.
+
+Bellabeat can use the information of Fitbit regarding days and hours with more activity to launch digital ad campaigns targeted before or during these days or hours; hence promoting the acquisition of new products. Moreover, by knowing that the majority of studied users were overweight or obese, it can leverage that information to embrace the current trends of weight control and in-person fitness training. As a result, a successful marketing campaign could be to promote on-site training days targeted for people with weight problems. Moreover, promotions or discounts can be offered to attendees on-site, creating as a result, a wellness community that promote Bellabeat's products.
+
+Sleep patterns among studied users suggested that overall users have either problems on sleeping or are not sleeping enough. Currently, Ivy+ has distinguishable features that promote wellness and sleep. Therefore, on top of emphasizing on women's market, the company's marketing campaign should address more heavily its sleep features and how they contribute to a good sleep.
+
+Last, based on the health and wellness trends, particularly for women's health, it was possible to find a niche market where Bellabeat with Ivy+ has not yet explored. This field is menopause and post-menopause monitoring, which is a niched market that was difficult to observe even among its competitors. Hence, as a next step, it is highly suggested that Bellabeat introduce menopause monitoring to pioneer in the field and increase its competitiveness in an area which has not been addressed properly yet.
+
+# References
+
+1. Bellabeat. (n.d.). IVY Support.[Online] Retrieved from https://support.bellabeat.com/hc/en-us/categories/360002727059-IVY
+2. Bellabeat. (n.d.). Leaf Support. [Online] Retrieved from: https://support.bellabeat.com/hc/en-us/categories/201573705-Leaf
+3. McKinsey & Company. (2024). The trends defining the $1.8 trillion-dollar global wellness market in 2024. [online] Available at: https://www.mckinsey.com/industries/consumer-packaged-goods/our-insights/the-trends-defining-the-1-point-8-trillion-dollar-global-wellness-market-in-2024[Accessed 08 May 2024]
+4. Statista. (n.d.). Worldwide - Statista - The Statistics Portal. [Online] Available at: https://www.statista.com/outlook/hmo/digital-health/digital-fitness-well-being/fitness-trackers/worldwide [Accessed 08 May 2024]
+5. Fortune Business Insights. (n.d.). Fitness Tracker Market. [Online] Available at: https://www.fortunebusinessinsights.com/fitness-tracker-market-103358 [Accessed 08 May 2024]
+6. Mordor Intelligence. (n.d.). Fitness Tracker Market. [Online] Available at: https://www.mordorintelligence.com/industry-reports/fitness-tracker-market [Accessed 08 May 2024]
+7. Furberg, R., Brinton, J., Keating, M., & Ortiz, A. (2016). Crowd-sourced Fitbit datasets 03.12.2016-05.12.2016 [Data set]. Zenodo. https://doi.org/10.5281/zenodo.53894
+8. Fitabase. (2023). Fitabase Data Dictionary (Version 1.0). [PDF] Available at: https://www.fitabase.com/media/1930/fitabasedatadictionary102320.pdf [Accessed 06 May 2024]
+9. Business of Apps. (n.d.). Fitbit Statistics. [Online] Available at: https://www.businessofapps.com/data/fitbit-statistics/ [Accessed 09 May 2024]
+10. Calculator.net. (n.d.). Sample Size Calculator. [Online] Available at: https://www.calculator.net/sample-size-calculator.html [Accessed 10 May 2024]
+11. British Heart Foundation. (n.d.). Your heart rate. [Online] Available at: https://www.bhf.org.uk/informationsupport/how-a-healthy-heart-works/your-heart-rate [Accessed 11 May 2024]
+12. NHS Inform. (n.d.). Body Mass Index (BMI). [Online] Available at: https://www.nhsinform.scot/healthy-living/food-and-nutrition/healthy-eating-and-weight-loss/body-mass-index-bmi/ [Accessed 11 May 2024]
+13. Sleep Foundation. (n.d.). How Much Sleep Do We Really Need? [Online] Available at: https://www.sleepfoundation.org/how-sleep-works/how-much-sleep-do-we-really-need [Accessed 12 May 2024]
+
+
+
+
+
+
